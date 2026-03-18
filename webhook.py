@@ -48,7 +48,7 @@ def send_vinted_embed(item, is_bon_plan=False):
     }
 
     payload = {
-        "content": "🔔 **Nouvel article Nike détecté !**" if not is_bon_plan else "🔥 **OFFRE EXCEPTIONNELLE !**",
+        "content": "🔔 **Neau running nike détecté !**" if not is_bon_plan else "🔥 **OFFRE EXCEPTIONNELLE !**",
         "embeds": [embed]
     }
 
@@ -58,3 +58,16 @@ def send_vinted_embed(item, is_bon_plan=False):
             print(f"[!] Erreur Webhook: {response.status_code} - {response.text}")
     except Exception as e:
         print(f"[!] Erreur lors de l'envoi du Webhook: {e}")
+
+def send_startup_message():
+    if not DISCORD_WEBHOOK_URL:
+        return
+        
+    payload = {
+        "content": "🚀 **Le bot Vinted Nike est en ligne !**\nLe monitoring des articles a commencé."
+    }
+    
+    try:
+        requests.post(DISCORD_WEBHOOK_URL, json=payload, timeout=10)
+    except:
+        pass

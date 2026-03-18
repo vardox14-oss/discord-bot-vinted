@@ -1,7 +1,7 @@
 import time
 import random
 from scraper import VintedScraper, filter_items
-from webhook import send_vinted_embed
+from webhook import send_vinted_embed, send_startup_message
 from config import KEYWORDS, MAX_PRICE, TARGET_SIZES, BON_PLAN_THRESHOLD, VINTED_PARAMS, INTERVAL
 
 def main():
@@ -11,6 +11,9 @@ def main():
     
     scraper = VintedScraper()
     seen_items = set()
+    
+    # Envoi du message de démarrage
+    send_startup_message()
     
     print("[*] Initialisation de la mémoire (1er passage)...")
     for kw in KEYWORDS:
@@ -51,7 +54,7 @@ def main():
                         is_bon_plan = price < BON_PLAN_THRESHOLD
                         
                         item_title = full_item.get("title") or "N/A"
-                        print(f"[!] NOUVEAU RUNING DÉTECTÉ: {item_title} - {price}€")
+                        print(f"[!] NOUVEAU RUNNING DÉTECTÉ: {item_title} - {price}€")
                         send_vinted_embed(full_item, is_bon_plan=is_bon_plan)
                 
                 time.sleep(random.uniform(1, 2))
