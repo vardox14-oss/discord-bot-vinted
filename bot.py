@@ -43,13 +43,15 @@ def main():
                         item_details = scraper.get_item_details(item_id)
                         full_item = {**item, **item_details}
                         
-                        raw_price = full_item.get("total_item_price")
-                        if raw_price is None:
-                            raw_price = full_item.get("price", 0)
-                        try:
-                            price = float(raw_price)
-                        except (ValueError, TypeError):
-                            price = 0.0
+                        # Extraction robuste du prix pour le check "Bon Plan"
+                        price_data = full_item.get("total_item_price") or full_item.get("price")
+                        if isinstance(price_data, dict):
+                            price = float(price_data.get("amount", 0))
+                        else:
+                            try:
+                                price = float(price_data or 0)
+                            except:
+                                price = 0.0
 
                         is_bon_plan = price < BON_PLAN_THRESHOLD
                         

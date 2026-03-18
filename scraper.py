@@ -60,8 +60,15 @@ def filter_items(items, keywords, max_price, sizes):
     filtered = []
     for item in items:
         title = item.get("title", "").lower()
-        raw_price = item.get("total_item_price")
-        price = float(raw_price if raw_price is not None else 0)
+        # Gestion du prix qui peut être un dictionnaire ou une chaîne
+        raw_price_data = item.get("total_item_price")
+        if isinstance(raw_price_data, dict):
+            price = float(raw_price_data.get("amount", 0))
+        else:
+            try:
+                price = float(raw_price_data or 0)
+            except:
+                price = 0.0
         size = item.get("size_title", "").upper()
         
         if not any(kw.lower() in title for kw in keywords):

@@ -12,12 +12,20 @@ def send_vinted_embed(item, is_bon_plan=False):
         return
 
     title = item.get("title", "Sans titre")
-    price = item.get("total_item_price") or item.get("price", "N/A")
+    
+    # Extraction propre du prix et de la devise
+    price_data = item.get("total_item_price") or item.get("price")
+    if isinstance(price_data, dict):
+        price = price_data.get("amount", "N/A")
+        currency = price_data.get("currency_code") or price_data.get("currency", "€")
+    else:
+        price = price_data or "N/A"
+        currency = item.get("total_item_price_currency") or item.get("currency", "€")
+        
     size = item.get("size_title") or item.get("size", "N/A")
     brand = item.get("brand_title", "Inconnue")
     condition = item.get("status", "N/A")
     description = item.get("description", "Pas de description")
-    currency = item.get("total_item_price_currency") or item.get("currency", "€")
     url = f"https://www.vinted.fr{item.get('path')}" if item.get('path') else item.get('url', '#')
     photo = ""
     if item.get("photo"):
@@ -48,7 +56,7 @@ def send_vinted_embed(item, is_bon_plan=False):
     }
 
     payload = {
-        "content": "🔔 **Neau running nike détecté !**" if not is_bon_plan else "🔥 **OFFRE EXCEPTIONNELLE !**",
+        "content": "@everyone 🔔 **Nouvel article Nike détecté !**" if not is_bon_plan else "@everyone 🔥 **OFFRE EXCEPTIONNELLE !**",
         "embeds": [embed]
     }
 
