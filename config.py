@@ -4,7 +4,7 @@
 KEYWORDS = [
     "running zabuza", "zabuza", "berlin", "nike trail",
     "nike running division", "running division", "pull berlin",
-    "haut zabuza", "veste nike trail"
+    "haut zabuza", "veste nike trail","under harmour hybrid","therma fit menthe"
 ]
 
 MAX_PRICE = 40

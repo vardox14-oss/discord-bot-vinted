@@ -2,36 +2,41 @@ import time
 import random
 from scraper import VintedScraper, filter_items
 from webhook import send_vinted_embed, send_startup_message
-from config import KEYWORDS, MAX_PRICE, TARGET_SIZES, BON_PLAN_THRESHOLD, VINTED_PARAMS, INTERVAL
+from config import KEYWORDS, MAX_PRICE, TARGET_SIZES, BON_PLAN_THRESHOLD, VINTED_PARAMS, INTERVAL, DOMAINS
 
 def main():
     print("--- [DÉMARRAGE DU BOT VINTED NIKE] ---")
     print(f"Keywords: {', '.join(KEYWORDS)}")
     print(f"Max Price: {MAX_PRICE}€ | Sizes: {', '.join(TARGET_SIZES)}")
     
-    scraper = VintedScraper()
+    scrapers = {domain: VintedScraper(domain) for domain in DOMAINS}
     seen_items = set()
     
     # Envoi du message de démarrage
     send_startup_message()
     
-    print("[*] Initialisation de la mémoire (1er passage)...")
-    for kw in KEYWORDS:
-        params = VINTED_PARAMS.copy()
-        params["search_text"] = kw
-        items = scraper.search(params)
-        for item in items:
-            seen_items.add(item.get("id"))
+    print("[*] Initialisation de la mémoire internationale (1er passage)...")
+    for domain, scraper in scrapers.items():
+        print(f"[*] Analyse initiale : {domain}...")
+        for kw in KEYWORDS:
+            params = VINTED_PARAMS.copy()
+            params["search_text"] = kw
+            items = scraper.search(params)
+            for item in items:
+                seen_items.add(item.get("id"))
+            time.sleep(1)
     
     print(f"[*] Mémoire initialisée avec {len(seen_items)} articles. Lancement du monitoring...")
 
     while True:
         try:
-            for kw in KEYWORDS:
-                params = VINTED_PARAMS.copy()
-                params["search_text"] = kw
-                
-                raw_items = scraper.search(params)
+            for domain, scraper in scrapers.items():
+                print(f"[*] Scan en cours sur : {domain}...")
+                for kw in KEYWORDS:
+                    params = VINTED_PARAMS.copy()
+                    params["search_text"] = kw
+                    
+                    raw_items = scraper.search(params)
                 filtered = filter_items(raw_items, [kw], MAX_PRICE, TARGET_SIZES)
                 
                 for item in filtered:
