@@ -3,7 +3,7 @@
 
 KEYWORDS = [
     "running zabuza", "zabuza", "berlin", "nike trail",
-    "nike running division", "running division", "pull berlin",
+    "nike running division", "running division", "pull berlin", "running zabuza",
     "haut zabuza", "veste nike trail", "under harmour hybrid", "therma fit menthe"
 ]
 
@@ -13,8 +13,8 @@ DOMAINS = [
     "vinted.de",    # Allemagne
     "vinted.co.uk", # Royaume-Uni
     "vinted.pl",    # Pologne
-    "vinted.cz",    # République Tchèque
-    "vinted.hu"     # Hongrie
+    "vinted.cz",    
+    "vinted.hu"     
 ]
 
 MAX_PRICE = 40
