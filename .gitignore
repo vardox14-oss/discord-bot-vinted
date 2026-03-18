@@ -1,0 +1,7 @@
+.env
+__pycache__/
+venv/
+*.pyc
+.vscode/
+bot_vinted_katabump.zip
+bot_vinted_katabump_v2.zip
