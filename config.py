@@ -4,7 +4,17 @@
 KEYWORDS = [
     "running zabuza", "zabuza", "berlin", "nike trail",
     "nike running division", "running division", "pull berlin",
-    "haut zabuza", "veste nike trail","under harmour hybrid","therma fit menthe"
+    "haut zabuza", "veste nike trail", "under harmour hybrid", "therma fit menthe"
+]
+
+# Liste des domaines Vinted à surveiller (Monde entier)
+DOMAINS = [
+    "vinted.fr",    # France + Espagne + Italie + Belgique + Luxembourg + Pays-Bas
+    "vinted.de",    # Allemagne
+    "vinted.co.uk", # Royaume-Uni
+    "vinted.pl",    # Pologne
+    "vinted.cz",    # République Tchèque
+    "vinted.hu"     # Hongrie
 ]
 
 MAX_PRICE = 40
